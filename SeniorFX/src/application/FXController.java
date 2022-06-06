@@ -50,7 +50,6 @@ public class FXController implements Initializable {
 
 		File f = new File("\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processado\\Nfe");
 
-		System.out.println(f.getPath());
 		pathnames = f.list();
 
 		for (String file : pathnames) {
