@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="261.0" prefWidth="450.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FXController">
+<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="261.0" prefWidth="450.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FXController">
    <children>
       <ImageView id="img" fitHeight="150.0" fitWidth="425.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@senior.png" />
+            <Image url="@sadsenior.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnDone" defaultButton="true" layoutX="189.0" layoutY="210.0" mnemonicParsing="false" onAction="#converter" prefHeight="37.0" prefWidth="73.0" text="OK" />
-      <TextField fx:id="txtFieldNF" alignment="CENTER" layoutX="142.0" layoutY="167.0" prefWidth="171.0" promptText="Número da NF" />
+      <Button id="button" fx:id="btnDone" defaultButton="true" layoutX="189.0" layoutY="210.0" mnemonicParsing="false" onAction="#converter" prefHeight="37.0" prefWidth="73.0" text="OK" textFill="#02d0a3" />
+      <TextField id="text" fx:id="txtFieldNF" alignment="CENTER" layoutX="142.0" layoutY="167.0" prefWidth="171.0" promptText="Número da NF" />
+      <Hyperlink id="link" layoutY="240.0" onAction="#donation" text="Donate" textFill="WHITE" />
    </children>
 </AnchorPane>
