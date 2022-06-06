@@ -1,1 +1,37 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#background {
+	-fx-background-color: #FFFFFF;
+}
+
+#text {
+	-fx-border-style: hidden, hidden, solid, hidden;
+	-fx-border-color: #FFFFFF #FFFFFF #008267 #FFFFFF;
+	-fx-border-width: 2;
+	-fx-background-color: #FFFFFF;
+	-fx-text-fill: #000000;
+}
+
+#button {
+	-fx-background-color: #008267;
+	-fx-text-fill: #FFFFFF;
+	-fx-background-radius: 20px;
+}
+
+#button:hover {
+	-fx-background-color: #02d0a3;
+}
+
+#link {
+	-fx-text-fill: #FFFFFF;
+}
+
+#link:hover {
+	-fx-text-fill: #FF0000;
+}
+
+#img {
+	-fx-image: url(sadsenior.png);
+}
+
+#img:hover {
+	-fx-image: url(happysenior.png);
+}
