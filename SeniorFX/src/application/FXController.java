@@ -1,10 +1,12 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -129,5 +131,10 @@ public class FXController implements Initializable {
 						"[SENIOR FIXER]....................................................................... BUTTON HAS BEEN ENABLED.");
 			}
 		}
+	}
+
+	public void donation() throws Exception {
+		URI link = new URI("https://linktr.ee/matheusdpo_");
+		Desktop.getDesktop().browse(link);
 	}
 }
