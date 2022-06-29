@@ -1,15 +1,14 @@
 package application;
 
 import java.awt.Desktop;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,104 +30,34 @@ public class FXController implements Initializable {
 
 	}
 
-	public void converter() throws IOException {
-		if (btnDone.isDisable() == false) {
-			btnDone.setDisable(true);
-			System.out.println(
-					"[SENIOR FIXER]....................................................................... BUTTON HAS BEEN DISABLED.");
-		}
-
+	public void converter() {
 		String NF = txtFieldNF.getText();
-		System.out.println(
-				"[SENIOR FIXER]....................................................................... NF NUMBER: "
-						+ NF);
 
-		final Pattern regex = Pattern
-				.compile("NFe3522067227725400016255001000" + NF + "([0-9])+" + "_" + "([0-9])+" + ".xml");
+		Path seniorProcessado = Paths
+				.get("\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processado\\Nfe");
 
-		String[] pathnames;
+		Path seniorProcessar = Paths.get("\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processar\\Nfe");
 
-		File f = new File("\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processado\\Nfe");
+		String NFinal = "NFe3522067227725400016255001000" + NF + "([0-9])+" + "_" + "([0-9])+" + ".xml";
 
-		pathnames = f.list();
-
-		for (String file : pathnames) {
-			try {
-				if (regex.matcher(file).find()) {
-					System.out.println(
-							"[SENIOR FIXER]....................................................................... THE FILE HAS BEEN FOUND: "
-									+ file);
-					FileInputStream fis = null;
-					FileOutputStream fos = null;
-
-					try {
-						try {
-							fis = new FileInputStream(
-									"\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processado\\Nfe\\"
-											+ file);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-							Alert a = new Alert(AlertType.ERROR);
-							a.setTitle("Senior Fixer");
-							a.setHeaderText("Erro!");
-							a.setContentText("File not found");
-							a.show();
-						}
-
-						try {
-							fos = new FileOutputStream(
-									"\\\\Seniorprd\\SeniorPRD\\sde\\integracao\\dolomia_filial 1\\Processar\\Nfe\\"
-											+ file);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-							Alert a = new Alert(AlertType.ERROR);
-							a.setTitle("Senior Fixer");
-							a.setHeaderText("Erro!");
-							a.setContentText("File not found");
-							a.show();
-						}
-
-						int c;
-
-						while ((c = fis.read()) != -1) {
-							fos.write(c);
-						}
-						System.out.println(
-								"[SENIOR FIXER]....................................................................... COPIED SUCCESSULLY.");
-					}
-
-					finally {
-						if (fis != null) {
-							fis.close();
-						}
-						if (fos != null) {
-							fos.close();
-						}
-
-						if (btnDone.isDisable() == true) {
-							btnDone.setDisable(false);
-							System.out.println(
-									"[SENIOR FIXER]....................................................................... BUTTON HAS BEEN ENABLED.");
-						}
-
-						Alert a = new Alert(AlertType.CONFIRMATION);
-						a.setTitle("Senior Fixer");
-						a.setHeaderText("Concluído!");
-						a.setContentText("Nota Fiscal: " + NF + " devidamente ajustada!" + "\n"
-								+ "Aguarde alguns segundos para que ela possa ser liberada no sde.");
-						a.show();
-
-					}
+		try (DirectoryStream<Path> findNF = Files.newDirectoryStream(seniorProcessado, NFinal)) {
+			for (Path path : findNF) {
+				if (path.getFileName().toString().equals(NFinal)) {
+					Files.copy(seniorProcessado.resolve(NFinal), seniorProcessar.resolve(NFinal));
+					Alert a = new Alert(AlertType.CONFIRMATION);
+					a.setTitle("Senior Fixer");
+					a.setHeaderText("Concluído!");
+					a.setContentText("Nota Fiscal: " + NF + " devidamente ajustada!" + "\n"
+							+ "Aguarde alguns segundos para que ela possa ser liberada no sde.");
+					a.show();
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-
-			if (btnDone.isDisable() == true) {
-				btnDone.setDisable(false);
-				System.out.println(
-						"[SENIOR FIXER]....................................................................... BUTTON HAS BEEN ENABLED.");
-			}
+		} catch (IOException e) {
+			Alert a = new Alert(AlertType.WARNING);
+			a.setTitle("Senior Fixer");
+			a.setHeaderText("Erro!");
+			a.setContentText(e.toString());
+			a.show();
 		}
 	}
 
